@@ -20,9 +20,9 @@ def mms_reply():
 
 
 def start_ngrok():
-    from twilio.rest import Client
     from pyngrok import ngrok
-
+    from twilio.rest import Client
+    
     url = ngrok.connect(5000).public_url
     print(" * Tunnel URL:", url)
     client = Client(TWILIO_ACCOUNT, TWILIO_TOKEN)
