@@ -101,13 +101,13 @@ def start_ngrok():
     from pyngrok import ngrok
     from twilio.rest import Client
 
+    #automate ngrok
     url = ngrok.connect(5000).public_url
     print(f" * Tunnel: {url}")
     
+   # set incoming numbers and webhook
     account_sid, auth_token = TWILIO_ACCOUNT, TWILIO_TOKEN
     client = Client(account_sid, auth_token)
-
-    # set incoming numbers and webhook
     client.incoming_phone_numbers.list(
         CELLPHONE)[0].update(
             sms_url=f"{url}/bot")

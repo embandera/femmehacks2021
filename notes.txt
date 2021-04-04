@@ -3,7 +3,7 @@ this is ngrock: https://www.youtube.com/watch?v=NAyrJYG11JA
 python-dotenv exaample: https://stackoverflow.com/questions/41546883/what-is-the-use-of-python-dotenv
 
 Twilio provides test credentials for testing. These don't eat up the trial account's credits: 
-(if you use these, txt wont be sent to your phone)
+(actually, we can't really use this. Texts wont be sent to your phones.)
 https://www.twilio.com/docs/iam/test-credentials
 https://www.twilio.com/blog/2018/04/twilio-test-credentials-magic-numbers.html
 
