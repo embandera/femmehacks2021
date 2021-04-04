@@ -5,6 +5,7 @@ import requests
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio_credentials_private import CELLPHONE, TWILIO_NUMBER, TWILIO_ACCOUNT, TWILIO_TOKEN
 
+import pickle
 import json
 import numpy as np
 import pandas as pd
@@ -35,12 +36,12 @@ def bot():
         msg.body("Hi there! Which category do you want to donate to:'Environment', 'Arts, Culture, Humanities', 'Religion','Human Services', 'Education', 'Animals', 'International','Health', 'Community Development', 'Human and Civil Rights','Research and Public Policy'?")
     return str(resp)
 
+input_file = 'CLEAN_charity_data.csv'
+df = pd.read_csv(input_file, header=0, \
+    sep=',',index_col=False, encoding='utf8',lineterminator='\n')
 
 def get_org_recs(category, size):
-    # memory = json.loads(request.form.get('Memory'))
-    filename = 'CLEAN_charity_data.csv'
-    df = pd.read_csv(filename, header=0, sep=',',index_col=False, encoding='utf8',lineterminator='\n')
-    
+    # df is initialized in main method.
     df_cat = df.loc[df['category'] == category]
     df_size = df_cat.loc[df['size'] == size]
     df_sorted = df_size.sort_values('score', ascending=False)
@@ -55,14 +56,17 @@ def start_ngrok():
     from twilio.rest import Client
     from pyngrok import ngrok
 
+    account = TWILIO_ACCOUNT
+    token = TWILIO_TOKEN
     url = ngrok.connect(5000).public_url
     print(' * Tunnel URL:', url)
-    client = Client(TWILIO_ACCOUNT, TWILIO_TOKEN)
+    client = Client(account, token)
     client.incoming_phone_numbers.list(
         CELLPHONE)[0].update(
             sms_url=url + '/bot')
 
 
 if __name__ == "__main__":
+    # print(get_org_recs("Environment", "small"))
     start_ngrok()
     app.run(debug=True)
