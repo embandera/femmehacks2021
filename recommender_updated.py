@@ -57,7 +57,7 @@ def bot():
         'Human and Civil Rights',
         'Research and Public Policy'
         ]
-     posSize = [
+    posSize = [
         'small', 
         'mid', 
         'big'
@@ -82,12 +82,12 @@ def bot():
     print(f" * output: {reply} {self.category} {self.size}")
     return str(resp)
 
+input_file = 'CLEAN_charity_data.csv'
+df = pd.read_csv(input_file, header=0, \
+    sep=',',index_col=False, encoding='utf8',lineterminator='\n')
 
 def get_org_recs(category, size):
     # memory = json.loads(request.form.get('Memory'))
-    filename = 'CLEAN_charity_data.csv'
-    df = pd.read_csv(filename, header=0, sep=',',index_col=False, encoding='utf8',lineterminator='\n')
-    
     df_cat = df.loc[df['category'] == category]
     df_size = df_cat.loc[df['size'] == size]
     df_sorted = df_size.sort_values('score', ascending=False)
@@ -114,5 +114,7 @@ def start_ngrok():
 
 
 if __name__ == "__main__":
+    # print(get_org_recs("Environment", "small"))
+
     start_ngrok()
     app.run(debug=True)
