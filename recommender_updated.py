@@ -1,6 +1,6 @@
 from twilio_credentials_private import CELLPHONE, TWILIO_NUMBER, TWILIO_ACCOUNT, TWILIO_TOKEN
 # from twilio import twiml
-from flask import Flask, request, redirect, send_file
+from flask import Flask, request, redirect, send_file, render_template 
 # import requests
 from twilio.twiml.messaging_response import MessagingResponse
 
@@ -10,6 +10,20 @@ import pandas as pd
 import re
 
 app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+@app.route("/femmehacks")
+def femmehacks():
+    return render_template("femmehacks.html")
+
+
+@app.route("/philanthropist")
+def philanthropist():
+    return render_template("philanthropist.html")
 
 # @app.route('/bot', methods=['POST'])
 # def bot():
