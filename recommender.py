@@ -36,10 +36,12 @@ def bot():
         msg.body("Hi there! Which category do you want to donate to:'Environment', 'Arts, Culture, Humanities', 'Religion','Human Services', 'Education', 'Animals', 'International','Health', 'Community Development', 'Human and Civil Rights','Research and Public Policy'?")
     return str(resp)
 
+input_file = 'CLEAN_charity_data.csv'
+df = pd.read_csv(input_file, header=0, \
+    sep=',',index_col=False, encoding='utf8',lineterminator='\n')
 
 def get_org_recs(category, size):
-    # memory = json.loads(request.form.get('Memory'))
-    
+    # df is initialized in main method.
     df_cat = df.loc[df['category'] == category]
     df_size = df_cat.loc[df['size'] == size]
     df_sorted = df_size.sort_values('score', ascending=False)
@@ -65,13 +67,6 @@ def start_ngrok():
 
 
 if __name__ == "__main__":
-    # make csv into dataframe, pickle dataframe, then unpickle
-    # this section will be updated when integrated with gcp storage
-    input_file = 'CLEAN_charity_data.csv'
-    pickled_file = 'charities_df.pickle'
-    charities_df = pd.read_csv(input_file, header=0, sep=',',index_col=False, encoding='utf8',lineterminator='\n')
-    charities_df.to_pickle(pickled_file)
-    df = pd.read_pickle(pickled_file)
-
+    # print(get_org_recs("Environment", "small"))
     start_ngrok()
     app.run(debug=True)
